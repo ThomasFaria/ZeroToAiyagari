@@ -1,4 +1,4 @@
-# Zero to Aiyagari
+# Zero to Aiyagari (dev)
 
 ---
 
