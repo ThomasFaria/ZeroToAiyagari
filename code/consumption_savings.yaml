@@ -1,33 +1,33 @@
 name: Consumption Savings
 
 symbols:
-    states: [a]
+    states: [m]
     exogenous: [e]
     parameters: [beta, B, a_max, r, w]
-    controls: [i]
+    controls: [c]
 
 
-definitions: |
-    c[t] = (1+r)*a[t] +  w*exp(e[t]) - i[t]
-
+# definitions: |
+#     i[t] = m[t] - c[t]
 
 equations:
 
     arbitrage: |
-        1-beta*(1+r)*c[t]/c[t+1] ⟂ -B <= i[t] <= (1+r)*a[t]+w*exp(e[t])
+        beta*(1+r)*c[t]/c[t+1]-1 ⟂ 0 <= c[t] <= m[t]
         
     transition: |
-        a[t] = i[t-1]
-
+        m[t] = w*exp(e[t]) + (m[t-1]-c[t-1])*(1+r)
 
 calibration:
 
     beta: 0.99
-    B: 1e-10
-    a_max: 300.
+    B: -1
+    a_max: 100
+    m: 1.0
+    c: 1
     a: 1
     i: a
-    K: 41.
+    K: 40.
     alpha: 0.36
     A: 1
     N: 1
@@ -39,14 +39,13 @@ calibration:
 
 exogenous:  
     e: !UNormal
-        σ: 0.01
+        σ: 0.1
 
 
 domain:
-    # a: [-B, a_max]
-    a: [0., 100.]
+    m: [0.1, a_max]
 
 
 options:
     grid: !Cartesian
-        orders: [30]
+        orders: [1000]
