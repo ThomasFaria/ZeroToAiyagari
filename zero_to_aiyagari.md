@@ -26,17 +26,7 @@
 - Objective: $$\max_{0 \leq c_t \leq w e_t + r a_{t-1}} \mathbb{E}_0 \sum \beta^t U(c_t)$$
 
 ---
-### Recursive formulation
 
-This sequential problem can be rewritten recursively:
-
-$$ v(a_{t-1}, e_t) = \max_{0 \leq c_t \leq w e_t + ra_{t-1}} U(c_t) + \beta \mathbb{E}_t v(a_t, e_{t+1}) $$
-
-where $c_t,~a_t$ are control variables and $e_t,~a_{t-1}$ state ones.
-
-This recursive formulation exploits the stationarity of the problem: the decisions depend upon the past level of capital and the exogenous shock but not on the time period itself.
-
----
 ### Consumption Savings (2)
 
 - $Z$ is the set of all possible values for the exogenous shock $e_t$
@@ -69,37 +59,51 @@ Assumptions:
 This results in $\Pi(s_0)$ being nonempty for all $s_0$.
 
 ---
-### Principle of optimality
+
+### Recursive formulation
+
+This sequential problem can be rewritten recursively:
+
+$$ v(a_{t-1}, e_t) = \max_{0 \leq c_t \leq w e_t + ra_{t-1}} U(c_t) + \beta \mathbb{E}_t v(a_t, e_{t+1}) $$
+
+where $c_t,~a_t$ are control variables and $e_t,~a_{t-1}$ state ones.
+
+This recursive formulation exploits the stationarity of the problem: the decisions depend upon the past level of capital and the exogenous shock but not on the time period itself.
+
+---
+
+### Assumptions
+
+- $U$ is continuous and bounded.
+- $\Gamma$ is continuous and compact-valued.
+
+These continous and compact-valued assumptions are required to ensure the solution exists.
+
+---
+
+### Bellman operator
+
+Let's define the following operators:
+- Bellman operator $T$: $(Tv)(s) = \max_{a\in A(s)} u(c) + \beta \sum_{s'} v(s')Q(s,a,s')$
+- Operator $T_{\sigma}$ associated to policy function $\sigma$: $(T_{\sigma}v)(s) = u(c) + \beta \sum_{s'} v(s')Q(s,\sigma(s),s')$ which can be written in the compact form: $T_{\sigma} v = u + \beta Q_{\sigma} v$.
+
+$\sigma$ is the policy function, that is: $a_t = \sigma(s_t) = \sigma((a_{t-1},e_t))$.
+
+---
+
+### Properties of these operators
+
+- The two operators are monotone: $v\leq w$ implies that $Tv\leq Tw$ and $T_{\sigma} v \leq T_{\sigma}w$ pointwise.
+- The two operators are contraction mappings with modulus $\beta$: $\left \| Tv-Tw \right \| \leq \beta \left \| v-w \right \|$ and $\left \| T_{\sigma}v-T_{\sigma}w \right \| \leq \beta \left \| v-w \right \|$
+
+---
+
+### Principle of optimality (Theorem 10.1.11 of Stachurski (2009))
 
 The principle of optimality ensures that the optimal policy function of the recursive problem coincides with the optimal sequence of decisions of the sequential problem.
 
-- $u_n (\pi, s_0)$ is the sum of expected discounted returns in period 0 through $n$ from the plan $\pi$ with the initial state $s_0$.
-- $u(\pi,s_0) = \lim_{n\rightarrow +\infty} u_n(\pi,s_0)$
-- $v^*(s) = \sup_{\pi \in \Pi(s)} u(\pi,s)$
-
----
-### Theorem 1 (9.2 of Stokey, Lucas and Prescott, 1989)
-
-**Theorem 1:** 
-
-This theorem gives conditions for the value function of the sequence problem to be a solution of the functional equation. It requires some additional elements compared to the deterministic case to ensure the measurability of $v^*$.
-
----
-### Theorem 2 (9.4 of Stokey, Lucas and Prescott, 1989)
-
-**Theorem 2:** 
-
----
-### Theorem 3 (9.5 of Stokey, Lucas and Prescott, 1989)
-
-**Theorem 3:** 
-
----
-### Existence and uniqueness of a fixed point
-
----
-###
-
+- The optimal value function $v^*$ is the unique solution to the Bellman equation (i.e. the unique fixed point of $T$).
+- $\sigma^*$ is an optimal policy function if and only if it is $v^*$-greedy, that is: $\sigma^* (s) \in \argmax_{a\in A(s)} u(c) + \beta \sum_{s' \in S} v^*(s') Q(s,\sigma(s),s') $
 
 ---
 ## Simulations
