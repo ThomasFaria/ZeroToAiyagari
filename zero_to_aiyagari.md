@@ -10,7 +10,6 @@
 
 ## Consumption-Savings Model
 
-
 ----
 
 ### Consumption Savings
@@ -25,7 +24,19 @@
 
 - Objective: $$\max_{0 \leq c_t \leq w e_t + r a_{t-1}} \mathbb{E}_0 \sum \beta^t U(c_t)$$
 
----
+----
+
+### Recursive formulation
+
+This sequential problem can be rewritten recursively:
+
+$$ v(a_{t-1}, e_t) = \max_{0 \leq c_t \leq w e_t + ra_{t-1}} U(c_t) + \beta \mathbb{E}_t v(a_t, e_{t+1}) $$
+
+where $c_t,~a_t$ are control variables and $e_t,~a_{t-1}$ state ones.
+
+This recursive formulation exploits the stationarity of the problem: the decisions depend upon the past level of capital and the exogenous shock but not on the time period itself.
+
+----
 
 ### Consumption Savings (2)
 
@@ -38,7 +49,7 @@
 - In period $t$, the agent chooses $a_t$ the endogenous state variable in the next period. $a_t \in \Gamma(a_{t-1}, e_t)$ where $\Gamma(a_{t-1}, e_t)$ is the set of feasible values given the current state $(a_{t-1}, e_t)$.
 - $A = \{ (x,y,z) \in X\times X\times Z: y \in \Gamma(x,z)\}$
 
----
+----
 
 ### Feasible plan
 
@@ -48,7 +59,7 @@ In period $\tau$, the agent knows the current state $s_{\tau} = (a_{\tau-1}, e_{
 - A plan $\pi$ is feasible from $s_0$ if $\pi_0 \in \Gamma(s_0)$ and $\pi_t (z^t) \in \Gamma(\pi_{t-1}(z^{t-1}),z_t)$ for all $z^t \in Z^t, t\geq 1$. 
 - $\Pi(s_0)$ denotes the set of plans that are feasible from $s_0$.
 
----
+----
 
 ### Non-empty set of feasible plans
 
@@ -58,7 +69,9 @@ Assumptions:
 
 This results in $\Pi(s_0)$ being nonempty for all $s_0$.
 
----
+----
+
+### Principle of optimality
 
 ### Recursive formulation
 
@@ -70,7 +83,10 @@ where $c_t,~a_t$ are control variables and $e_t,~a_{t-1}$ state ones.
 
 This recursive formulation exploits the stationarity of the problem: the decisions depend upon the past level of capital and the exogenous shock but not on the time period itself.
 
----
+
+----
+
+### Theorem 1 (9.2 of Stokey, Lucas and Prescott, 1989)
 
 ### Assumptions
 
@@ -79,13 +95,19 @@ This recursive formulation exploits the stationarity of the problem: the decisio
 
 These continous and compact-valued assumptions are required to ensure the solution exists.
 
----
+----
+
+### Theorem 2 (9.4 of Stokey, Lucas and Prescott, 1989)
 
 ### Bellman operator
 
 Let's define the following operators:
 - Bellman operator $T$: $(Tv)(s) = \max_{a\in A(s)} u(c) + \beta \sum_{s'} v(s')Q(s,a,s')$
 - Operator $T_{\sigma}$ associated to policy function $\sigma$: $(T_{\sigma}v)(s) = u(c) + \beta \sum_{s'} v(s')Q(s,\sigma(s),s')$ which can be written in the compact form: $T_{\sigma} v = u + \beta Q_{\sigma} v$.
+
+----
+
+### Theorem 3 (9.5 of Stokey, Lucas and Prescott, 1989)
 
 $\sigma$ is the policy function, that is: $a_t = \sigma(s_t) = \sigma((a_{t-1},e_t))$.
 
@@ -96,7 +118,11 @@ $\sigma$ is the policy function, that is: $a_t = \sigma(s_t) = \sigma((a_{t-1},e
 - The two operators are monotone: $v\leq w$ implies that $Tv\leq Tw$ and $T_{\sigma} v \leq T_{\sigma}w$ pointwise.
 - The two operators are contraction mappings with modulus $\beta$: $\left \| Tv-Tw \right \| \leq \beta \left \| v-w \right \|$ and $\left \| T_{\sigma}v-T_{\sigma}w \right \| \leq \beta \left \| v-w \right \|$
 
----
+----
+
+### Existence and uniqueness of a fixed point
+
+----
 
 ### Principle of optimality (Theorem 10.1.11 of Stachurski (2009))
 
@@ -106,6 +132,7 @@ The principle of optimality ensures that the optimal policy function of the recu
 - $\sigma^*$ is an optimal policy function if and only if it is $v^*$-greedy, that is: $\sigma^* (s) \in \argmax_{a\in A(s)} u(c) + \beta \sum_{s' \in S} v^*(s') Q(s,\sigma(s),s') $
 
 ---
+
 ## Simulations
 
 ---
