@@ -10,7 +10,6 @@
 
 ## Consumption-Savings Model
 
-
 ----
 
 ### Consumption Savings
@@ -25,7 +24,8 @@
 
 - Objective: $$\max_{0 \leq c_t \leq w e_t + r a_{t-1}} \mathbb{E}_0 \sum \beta^t U(c_t)$$
 
----
+----
+
 ### Recursive formulation
 
 This sequential problem can be rewritten recursively:
@@ -36,7 +36,8 @@ where $c_t,~a_t$ are control variables and $e_t,~a_{t-1}$ state ones.
 
 This recursive formulation exploits the stationarity of the problem: the decisions depend upon the past level of capital and the exogenous shock but not on the time period itself.
 
----
+----
+
 ### Consumption Savings (2)
 
 - $Z$ is the set of all possible values for the exogenous shock $e_t$
@@ -48,7 +49,7 @@ This recursive formulation exploits the stationarity of the problem: the decisio
 - In period $t$, the agent chooses $a_t$ the endogenous state variable in the next period. $a_t \in \Gamma(a_{t-1}, e_t)$ where $\Gamma(a_{t-1}, e_t)$ is the set of feasible values given the current state $(a_{t-1}, e_t)$.
 - $A = \{ (x,y,z) \in X\times X\times Z: y \in \Gamma(x,z)\}$
 
----
+----
 
 ### Feasible plan
 
@@ -58,7 +59,7 @@ In period $\tau$, the agent knows the current state $s_{\tau} = (a_{\tau-1}, e_{
 - A plan $\pi$ is feasible from $s_0$ if $\pi_0 \in \Gamma(s_0)$ and $\pi_t (z^t) \in \Gamma(\pi_{t-1}(z^{t-1}),z_t)$ for all $z^t \in Z^t, t\geq 1$. 
 - $\Pi(s_0)$ denotes the set of plans that are feasible from $s_0$.
 
----
+----
 
 ### Non-empty set of feasible plans
 
@@ -68,7 +69,8 @@ Assumptions:
 
 This results in $\Pi(s_0)$ being nonempty for all $s_0$.
 
----
+----
+
 ### Principle of optimality
 
 The principle of optimality ensures that the optimal policy function of the recursive problem coincides with the optimal sequence of decisions of the sequential problem.
@@ -77,31 +79,37 @@ The principle of optimality ensures that the optimal policy function of the recu
 - $u(\pi,s_0) = \lim_{n\rightarrow +\infty} u_n(\pi,s_0)$
 - $v^*(s) = \sup_{\pi \in \Pi(s)} u(\pi,s)$
 
----
+----
+
 ### Theorem 1 (9.2 of Stokey, Lucas and Prescott, 1989)
 
 **Theorem 1:** 
 
 This theorem gives conditions for the value function of the sequence problem to be a solution of the functional equation. It requires some additional elements compared to the deterministic case to ensure the measurability of $v^*$.
 
----
+----
+
 ### Theorem 2 (9.4 of Stokey, Lucas and Prescott, 1989)
 
 **Theorem 2:** 
 
----
+----
+
 ### Theorem 3 (9.5 of Stokey, Lucas and Prescott, 1989)
 
 **Theorem 3:** 
 
----
+----
+
 ### Existence and uniqueness of a fixed point
 
----
+----
+
 ###
 
 
 ---
+
 ## Simulations
 
 ---
