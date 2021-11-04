@@ -111,7 +111,7 @@ Let's define the following operators:
 
 $\sigma$ is the policy function, that is: $a_t = \sigma(s_t) = \sigma((a_{t-1},e_t))$.
 
----
+----
 
 ### Properties of these operators
 
