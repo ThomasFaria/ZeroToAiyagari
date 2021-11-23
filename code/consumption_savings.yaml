@@ -22,9 +22,9 @@ calibration:
 
     beta: 0.99
     B: -1
-    a_max: 300
+    a_max: 10
     m: 1.0
-    c: 1
+    c: 2
     a: 1
     i: a
     K: 40.
@@ -47,5 +47,6 @@ domain:
 
 
 options:
-    grid: !Cartesian
-        orders: [1000]
+    discretization:
+        endo:
+            n: 100

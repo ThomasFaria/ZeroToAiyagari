@@ -4,14 +4,13 @@ import Dolo: ergodic_distribution
 
 model = Model("code/consumption_savings.yaml")
 
-Dolo.set_calibration!(model; K=40)
+Dolo.set_calibration!(model; K=39)
 println("r: ", model.calibration.flat[:r])
 println("w: ", model.calibration.flat[:w])
 
-sol0 = time_iteration(model, (m,s)->min.(s, 1 .+0.01*(s.-1)), maxit=2)
+init_dr = (i,s)->max.(s, 2 .+0.01.*(s.-2))
 
-
-@time sol0 = improved_time_iteration(model, sol0.dr)
+sol0 = improved_time_iteration(model; dr0=init_dr)
 
 
 dr = sol0.dr
@@ -23,7 +22,7 @@ dr([1.0])
 w = model.calibration.flat[:w]
 r = model.calibration.flat[:r]
 
-tab = tabulate(model, sol0.dr, :m)
+tab = tabulate(model, dr, :m)
 
 plot(tab[:m], tab[:m], ylim=(0,4), xlabel="\$m_t\$", ylabel="\$c(m_t)\$")
 plot!(tab[:m], tab[:c])
@@ -55,22 +54,28 @@ StatsPlots.density!(pl1, sim[N=1, V=:m, T=40:1000])
 ###
 ###
 
-pl = plot(xlims=(0,300))
-Kvec = [37.9,38,38.1,39,200]
+pl = plot(xlims=(0,10))
+Kvec = [37,38,39, 40,41,45, 50, 55]
 
 for K in Kvec
 
 Dolo.set_calibration!(model; K=K)
 
-sol = improved_time_iteration(model, sol0.dr)
-μ = ergodic_distribution(model, sol)
+sol = improved_time_iteration(model; dr0=(i,s)->sol0.dr(s))
+# μ = ergodic_distribution(model, sol)
 
-plot!(pl, μ.axes[1].val, μ, label="K=$K")
+grid_exo = sol.dr.grid_exo
+gg = sol.dr.grid_endo
+grid_endo = Dolo.UCGrid([gg.min...],[10.0],1000)
+ 
+μ, Π = ergodic_distribution(model, sol.dr, grid_exo, grid_endo, sol.dprocess )
+x = cat(grid_endo.nodes...; dims=1)
+plot!(pl, x, μ, label="K=$K")
+
 
 end
 
 pl
-
 ###
 ###
 ###
@@ -79,7 +84,7 @@ pl
 
 function capital_supply(K0)
     Dolo.set_calibration!(model; K = K0)
-    sol = improved_time_iteration(model, sol0.dr, verbose=false)
+    sol = improved_time_iteration(model;dr0=(i,s)->sol0.dr(s), verbose=false)
     μ = ergodic_distribution(model, sol)
     m = μ.axes[1].val
     c = sol.dr(m[:,[CartesianIndex()]])
@@ -91,7 +96,7 @@ end
 
 
 
-K0vec = range(40, 50; length=10)
+K0vec = range(35, 50; length=10)
 
 @time K1vec = [capital_supply(k) for k in K0vec]
 
@@ -115,4 +120,6 @@ xx0 = [40.0]
 
 out0 = [0.0]
 
-NLsolve.nlsolve(fun!, xx0; show_trace=true)
+using NLsolve
+
+@time NLsolve.nlsolve(fun!, xx0; show_trace=true)
